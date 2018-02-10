@@ -18,4 +18,7 @@ class Player():
         return f'Player: Name = {self.name}'
 
     def choose_word(self, word):
-        self.word = word
+        self.word = word.upper()
+
+    def new_guess(self, guess):
+        self.guess = guess.upper()

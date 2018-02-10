@@ -7,7 +7,7 @@ class TestPlayer(unittest.TestCase):
     def setUp(self):
         self.player = Player('Max')
 
-    def test_player_setup(self):
+    def test_player_initialisation(self):
         self.assertEqual('Max', self.player.name)
         self.assertEqual(9, self.player.guesses)
         self.assertEqual(0, self.player.points)
@@ -17,4 +17,8 @@ class TestPlayer(unittest.TestCase):
 
     def test_choose_word(self):
         self.player.choose_word('hangman')
-        self.assertEqual('hangman', self.player.word)
+        self.assertEqual('HANGMAN', self.player.word)
+
+    def test_new_guess(self):
+        self.player.new_guess('a')
+        self.assertEqual('A', self.player.guess)
