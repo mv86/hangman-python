@@ -16,3 +16,6 @@ class Player():
 
     def __str__(self):
         return f'Player: Name = {self.name}'
+
+    def choose_word(self, word):
+        self.word = word
