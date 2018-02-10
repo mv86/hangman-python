@@ -22,3 +22,4 @@ class Player():
 
     def new_guess(self, guess):
         self.guess = guess.upper()
+        self.guesses += 1

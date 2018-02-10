@@ -17,9 +17,8 @@ class GameState():
         return f'GameState: Player = {self.player}, Opponent = {self.opponent}'
 
     def check_player_guess(self):
-        self.player.guesses += 1
         guess = self.player.guess
-        
+
         if len(guess) == 1 and self.word.count('_') > 1:
             if guess in self.opponent.word:
                 self.word = [guess if guess == letter else '_' for letter in self.opponent.word]
@@ -31,13 +30,19 @@ class GameState():
                 # call game_over()
                 # TODO move this functionality to game_over()
                 self.word = [guess if guess == letter else '_' for letter in self.opponent.word]
+                self.winner = self.player.name
             else:
                 self.player.misses.append(guess.lower())
 
         else:
             if guess == self.opponent.word:
-                #call game_over()
-                #TODO move this funtionality to game_over
+                # call game_over()
+                # TODO move this funtionality to game_over
                 self.word = list(self.opponent.word)
+                self.winner = self.player.name
             else:
                 self.player.misses.append(guess.lower())
+                
+        if self.player.guesses == 9:
+            # call game_over()
+            self.winner = self.opponent.name
