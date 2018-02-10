@@ -9,7 +9,7 @@ class TestPlayer(unittest.TestCase):
 
     def test_player_initialisation(self):
         self.assertEqual('Max', self.player.name)
-        self.assertEqual(9, self.player.guesses)
+        self.assertEqual(0, self.player.guesses)
         self.assertEqual(0, self.player.points)
         self.assertEqual('', self.player.word)
         self.assertEqual('', self.player.guess)
