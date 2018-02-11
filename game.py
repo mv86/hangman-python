@@ -1,4 +1,5 @@
 """Game class."""
+from board import board
 
 
 class Game():
@@ -7,8 +8,7 @@ class Game():
         self.player = player1
         self.opponent = player2
         self.word = list('_' * len(self.opponent.word))
-        self.board_image = ''
-        self.winner = ''
+        self.winner = None
 
     def __repr__(self):
         return f'{self.__class__.__name__!r}({self.player!r}, {self.opponent!r})'
@@ -21,7 +21,9 @@ class Game():
 
         if len(guess) == 1 and self.word.count('_') > 1:
             if guess in self.opponent.word:
-                self.word = [guess if guess == letter else '_' for letter in self.opponent.word]
+                for idx, letter in enumerate(self.opponent.word):
+                    if guess == letter:
+                        self.word[idx] = guess
             else:
                 self.player.misses.append(guess.lower())
 
@@ -29,7 +31,9 @@ class Game():
             if guess in self.opponent.word:
                 # call game_over()
                 # TODO move this functionality to game_over()
-                self.word = [guess if guess == letter else '_' for letter in self.opponent.word]
+                for idx, letter in enumerate(self.opponent.word):
+                    if guess == letter:
+                        self.word[idx] = guess
                 self.winner = self.player.name
             else:
                 self.player.misses.append(guess.lower())
@@ -43,6 +47,9 @@ class Game():
             else:
                 self.player.misses.append(guess.lower())
                 
-        if self.player.guesses == 9:
+        if len(self.player.misses) == 9:
             # call game_over()
             self.winner = self.opponent.name
+
+        print(board(self.word, self.player.misses))
+
