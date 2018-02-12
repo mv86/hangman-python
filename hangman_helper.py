@@ -7,19 +7,18 @@ def choose_players():
     while no_of_players not in ('1', '2'):
         no_of_players = input('\nNum of players 1/2?\n--> ').strip()
 
-    player_name = choose_name('Player 1')
+    player_name = _choose_name('Player 1')
     player1 = Player(player_name)
 
     if no_of_players == '2':
-        player_name = choose_name('Player 2')
+        player_name = _choose_name('Player 2')
         player2 = Player(player_name)
         return player1, player2
-        # play_game(player1, player2)
 
     return player1, Player('Computer')
 
 
-def choose_name(player):
+def _choose_name(player):
     name = None
     while not name:
         name = input(f'\n{player} please input your name\n--> ').capitalize().strip()
@@ -42,4 +41,4 @@ CHOICE_DICT = {
     'YES': True,
     'N': False,
     'NO': False
-} # play_game(player1)
+}

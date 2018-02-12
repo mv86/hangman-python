@@ -19,7 +19,6 @@ class Player():
     def choose_word(self, word):
         self.word = word.upper()
 
-    def new_guess(self):
-        guess = input(f'\nGuess a letter or the word {self.name}!\n--> ')
+    def new_guess(self, guess):
         self.guess = guess.upper()
         self.guesses += 1

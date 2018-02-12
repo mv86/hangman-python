@@ -1,5 +1,5 @@
 """Game class."""
-from board import board
+from board_images import BOARD_IMAGES
 
 
 class Game():
@@ -18,40 +18,51 @@ class Game():
         return f'Game: Player = {self.player}, Opponent = {self.opponent}'
 
     def check_player_guess(self):
+        """Internal logic for Game class. 
+
+           Check player current guess and updates Game word, misses, and winner instance variables.
+           Update player or opponent points when game ends.
+        """
         guess = self.player.guess
+        word = self.opponent.word
+        player = self.player.name
+        opponent = self.opponent.name
 
         if len(guess) == 1 and self.word.count('_') > 1:
-            if guess in self.opponent.word:
-                for idx, letter in enumerate(self.opponent.word):
+            if guess in word:
+                for idx, letter in enumerate(word):
                     if guess == letter:
                         self.word[idx] = guess
             else:
                 self.misses.append(guess.lower())
 
         elif len(guess) == 1 and self.word.count('_') == 1:
-            if guess in self.opponent.word:
-                # call game_over()
-                # TODO move this functionality to game_over()
-                for idx, letter in enumerate(self.opponent.word):
+            if guess in word:
+                for idx, letter in enumerate(word):
                     if guess == letter:
                         self.word[idx] = guess
-                self.winner = self.player.name
+                self.winner = player
+                self.player.points += 1
             else:
                 self.misses.append(guess.lower())
 
         else:
-            if guess == self.opponent.word:
-                # call game_over()
-                # TODO move this funtionality to game_over
-                self.word = list(self.opponent.word)
-                self.winner = self.player.name
+            if guess == word:
+                self.word = list(word)
+                self.winner = player
+                self.player.points += 1
             else:
                 self.misses.append(guess.lower())
                 
         if len(self.misses) == 9:
-            # call game_over()
-            self.winner = self.opponent.name
+            self.winner = opponent
+            self.opponent.points += 1
 
-    def show_board(self):
-        board(self.word, self.misses)
-
+    def display_board(self):
+        """Display game progress to terminal: Board_image, word, misses and players points."""
+        player = self.player
+        opponent = self.opponent
+        print(f"{BOARD_IMAGES[len(self.misses)]}")
+        print(f"Word: {' '.join(self.word)}\n")
+        print(f"Misses: {', '.join(self.misses)}\n")
+        print(f"Points: {player.name} = {player.points}, {opponent.name} = {opponent.points}\n")
