@@ -8,6 +8,7 @@ class Game():
         self.player = player1
         self.opponent = player2
         self.word = list('_' * len(self.opponent.word))
+        self.misses = []
         self.winner = None
 
     def __repr__(self):
@@ -25,7 +26,7 @@ class Game():
                     if guess == letter:
                         self.word[idx] = guess
             else:
-                self.player.misses.append(guess.lower())
+                self.misses.append(guess.lower())
 
         elif len(guess) == 1 and self.word.count('_') == 1:
             if guess in self.opponent.word:
@@ -36,7 +37,7 @@ class Game():
                         self.word[idx] = guess
                 self.winner = self.player.name
             else:
-                self.player.misses.append(guess.lower())
+                self.misses.append(guess.lower())
 
         else:
             if guess == self.opponent.word:
@@ -45,11 +46,12 @@ class Game():
                 self.word = list(self.opponent.word)
                 self.winner = self.player.name
             else:
-                self.player.misses.append(guess.lower())
+                self.misses.append(guess.lower())
                 
-        if len(self.player.misses) == 9:
+        if len(self.misses) == 9:
             # call game_over()
             self.winner = self.opponent.name
 
-        print(board(self.word, self.player.misses))
+    def show_board(self):
+        board(self.word, self.misses)
 

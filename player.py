@@ -9,7 +9,6 @@ class Player():
         self.points = 0
         self.word = ''
         self.guess = ''
-        self.misses = []
 
     def __repr__(self):
         return f'{self.__class__.__name__!r}({self.name!r})'
@@ -20,6 +19,7 @@ class Player():
     def choose_word(self, word):
         self.word = word.upper()
 
-    def new_guess(self, guess):
+    def new_guess(self):
+        guess = input(f'\nGuess a letter or the word {self.name}!\n--> ')
         self.guess = guess.upper()
         self.guesses += 1
