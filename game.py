@@ -25,23 +25,19 @@ class Game():
         """
         guess = self.player.guess
         word = self.opponent.word
-        player = self.player.name
-        opponent = self.opponent.name
+        player = self.player
+        opponent = self.opponent
 
         if len(guess) == 1 and self.word.count('_') > 1:
             if guess in word:
-                for idx, letter in enumerate(word):
-                    if guess == letter:
-                        self.word[idx] = guess
+                self._update_game_word(guess, word)
             else:
                 self.misses.append(guess.lower())
 
         elif len(guess) == 1 and self.word.count('_') == 1:
             if guess in word:
-                for idx, letter in enumerate(word):
-                    if guess == letter:
-                        self.word[idx] = guess
-                self.winner = player
+                self._update_game_word(guess, word)
+                self.winner = player.name
                 self.player.points += 1
             else:
                 self.misses.append(guess.lower())
@@ -49,14 +45,14 @@ class Game():
         else:
             if guess == word:
                 self.word = list(word)
-                self.winner = player
+                self.winner = player.name
                 self.player.points += 1
             else:
                 self.misses.append(guess.lower())
                 
         if len(self.misses) == 9:
-            self.winner = opponent
-            self.opponent.points += 1
+            self.winner = opponent.name
+            opponent.points += 1
 
     def display_board(self):
         """Display game progress to terminal: Board_image, word, misses and players points."""
@@ -66,3 +62,8 @@ class Game():
         print(f"Word: {' '.join(self.word)}\n")
         print(f"Misses: {', '.join(self.misses)}\n")
         print(f"Points: {player.name} = {player.points}, {opponent.name} = {opponent.points}\n")
+
+    def _update_game_word(self, guess, word):
+        for idx, letter in enumerate(word):
+            if guess == letter:
+                self.word[idx] = guess
