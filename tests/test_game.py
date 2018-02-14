@@ -16,6 +16,7 @@ class TestGame(unittest.TestCase):
         self.assertEqual(self.player1, self.game.player)
         self.assertEqual(self.player2, self.game.opponent)
         self.assertEqual(['_', '_', '_', '_', '_', '_', '_'], self.game.word)
+        self.assertEqual([], self.game.misses)
         self.assertEqual(None, self.game.winner)
 
     def test_check_player_guess(self):
@@ -43,9 +44,12 @@ class TestGame(unittest.TestCase):
         self.game.check_player_guess()
         self.assertEqual(['H', 'A', 'N', 'G', 'M', 'A', 'N'], self.game.word)     
         self.assertEqual('Max', self.game.winner)
+        self.assertEqual(1, self.player1.points)
 
     def test_opponant_wins(self):
         self.game.misses = ['b', 'c', 'd', 'e', 'f', 'i', 'k', 'l']
         self.player1.new_guess('o')
         self.game.check_player_guess()
+        self.assertEqual(['H', 'A', 'N', 'G', 'M', 'A', 'N'], self.game.word)
         self.assertEqual('Mary', self.game.winner)
+        self.assertEqual(1, self.player2.points)

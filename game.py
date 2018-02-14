@@ -1,4 +1,4 @@
-"""Game class."""
+"""Module with one class: Game"""
 from board_images import BOARD_IMAGES
 
 
@@ -28,31 +28,36 @@ class Game():
         player = self.player
         opponent = self.opponent
 
+        # General single letter guess
         if len(guess) == 1 and self.word.count('_') > 1:
             if guess in word:
                 self._update_game_word(guess, word)
             else:
                 self.misses.append(guess.lower())
 
+        # Single letter guess for final blank
         elif len(guess) == 1 and self.word.count('_') == 1:
             if guess in word:
                 self._update_game_word(guess, word)
                 self.winner = player.name
-                self.player.points += 1
+                player.points += 1
             else:
                 self.misses.append(guess.lower())
 
+        # Guess for whole word
         else:
             if guess == word:
                 self.word = list(word)
                 self.winner = player.name
-                self.player.points += 1
+                player.points += 1
             else:
                 self.misses.append(guess.lower())
-                
+           
+        # Check if guess limit has been reached     
         if len(self.misses) == 9:
             self.winner = opponent.name
             opponent.points += 1
+            self.word = list(word)
 
     def display_board(self):
         """Display game progress to terminal: Board_image, word, misses and players points."""
@@ -64,6 +69,7 @@ class Game():
         print(f"Points: {player.name} = {player.points}, {opponent.name} = {opponent.points}\n")
 
     def _update_game_word(self, guess, word):
+        """Helper function for check player guess."""
         for idx, letter in enumerate(word):
             if guess == letter:
                 self.word[idx] = guess
