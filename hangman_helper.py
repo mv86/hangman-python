@@ -1,5 +1,12 @@
 """Helper functions for hangman script."""
+import re
+from random import randrange
 from player import Player
+
+
+REGEX = re.compile('[^a-zA-Z]')
+with open('/usr/share/dict/words') as word_file:
+    DICTIONARY = set(word.strip().lower() for word in word_file if not REGEX.search(word.strip()))
 
 
 def choose_players():
@@ -34,12 +41,17 @@ def _choose_name(player):
 
 
 def word_choice(player):
-    """Prompt player2 for word choice."""
+    """Prompt player2 for word choice. Return str"""
     if player.name == 'Computer':
-        word = 'hangman' # TODO Add functionality
+        rand_idx = randrange(len(DICTIONARY))
+        word = list(DICTIONARY)[rand_idx]
     else:
-        # TODO Add word rules
-        word = input(f'\nPlease choose a secret word {player.name}...\n--> ').strip()
+        word = None
+        while not word:
+            word = input(f'\nPlease choose a secret word {player.name}...\n--> ').strip().lower()
+            if word not in DICTIONARY:
+                print('\nError! Word needs to be a dictionary word. No cheating!!!\n')
+                word = None
     return word
 
 
