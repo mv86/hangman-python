@@ -1,4 +1,4 @@
-"""Player Class."""
+"""Module with one class: Player."""
 
 
 class Player():
@@ -16,7 +16,7 @@ class Player():
     def __str__(self):
         return f'Player: Name = {self.name}'
 
-    def choose_word(self, word):
+    def add_word_choice(self, word):
         self.word = word.upper()
 
     def new_guess(self, guess):

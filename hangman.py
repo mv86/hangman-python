@@ -1,7 +1,7 @@
 #!/home/max/Python/projects/hangman/venv/bin/python
 """Script to start Hangman game."""
 from game import Game
-from hangman_helper import choose_players, word_choice, play_again
+from hangman_helper import choose_players, choose_word, play_again
 
 
 def hangman():
@@ -14,8 +14,8 @@ def hangman():
 
 def play_game(player1, player2):
     """Hangman game loop."""
-    word = word_choice(player2)
-    player2.choose_word(word)
+    word = choose_word(player2)
+    player2.add_word_choice(word)
     game = Game(player1, player2)
     game.display_board()
 
@@ -23,6 +23,7 @@ def play_game(player1, player2):
         guess = input(f'\nGuess a letter or the word {game.player.name}!\n--> ')
         game.player.new_guess(guess)
         game.check_player_guess()
+        game.check_for_winner()
         game.display_board()
 
     print(f'{game.winner} wins!!!')

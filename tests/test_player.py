@@ -15,7 +15,7 @@ class TestPlayer(unittest.TestCase):
         self.assertEqual('', self.player.guess)
 
     def test_choose_word(self):
-        self.player.choose_word('hangman')
+        self.player.add_word_choice('hangman')
         self.assertEqual('HANGMAN', self.player.word)
 
     def test_new_guess(self):

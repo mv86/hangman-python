@@ -6,7 +6,7 @@ from player import Player
 
 REGEX = re.compile('[^a-zA-Z]')
 with open('/usr/share/dict/words') as word_file:
-    DICTIONARY = set(word.strip().lower() for word in word_file if not REGEX.search(word.strip()))
+    DICTIONARY = {word.strip().lower() for word in word_file if not REGEX.search(word.strip())}
 
 
 def choose_players():
@@ -40,7 +40,7 @@ def _choose_name(player):
     return name
 
 
-def word_choice(player):
+def choose_word(player):
     """Prompt player2 for word choice. Return str"""
     if player.name == 'Computer':
         rand_idx = randrange(len(DICTIONARY))

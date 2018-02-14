@@ -9,7 +9,7 @@ class TestGame(unittest.TestCase):
     def setUp(self):
         self.player1 = Player('Max')
         self.player2 = Player('Mary')
-        self.player2.choose_word('hangman')
+        self.player2.add_word_choice('hangman')
         self.game = Game(self.player1, self.player2)
 
     def test_game_state_initialisation(self):
@@ -42,6 +42,7 @@ class TestGame(unittest.TestCase):
     def test_player_wins(self):
         self.player1.new_guess('hangman')
         self.game.check_player_guess()
+        self.game.check_for_winner()
         self.assertEqual(['H', 'A', 'N', 'G', 'M', 'A', 'N'], self.game.word)     
         self.assertEqual('Max', self.game.winner)
         self.assertEqual(1, self.player1.points)
@@ -50,6 +51,7 @@ class TestGame(unittest.TestCase):
         self.game.misses = ['b', 'c', 'd', 'e', 'f', 'i', 'k', 'l']
         self.player1.new_guess('o')
         self.game.check_player_guess()
+        self.game.check_for_winner()
         self.assertEqual(['H', 'A', 'N', 'G', 'M', 'A', 'N'], self.game.word)
         self.assertEqual('Mary', self.game.winner)
         self.assertEqual(1, self.player2.points)

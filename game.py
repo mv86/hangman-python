@@ -1,4 +1,4 @@
-"""Module with one class: Game"""
+"""Module with one class: Game."""
 from board_images import BOARD_IMAGES
 
 
@@ -18,46 +18,38 @@ class Game():
         return f'Game: Player = {self.player}, Opponent = {self.opponent}'
 
     def check_player_guess(self):
-        """Internal logic for Game class. 
-
-           Check player current guess and updates Game word, misses, and winner instance variables.
-           Update player or opponent points when game ends.
-        """
+        """Check player current guess and updates Game word, misses, & winner instance variables."""
         guess = self.player.guess
         word = self.opponent.word
-        player = self.player
-        opponent = self.opponent
 
-        # General single letter guess
-        if len(guess) == 1 and self.word.count('_') > 1:
+        if len(guess) == 1:
             if guess in word:
                 self._update_game_word(guess, word)
             else:
                 self.misses.append(guess.lower())
-
-        # Single letter guess for final blank
-        elif len(guess) == 1 and self.word.count('_') == 1:
-            if guess in word:
-                self._update_game_word(guess, word)
-                self.winner = player.name
-                player.points += 1
-            else:
-                self.misses.append(guess.lower())
-
-        # Guess for whole word
         else:
             if guess == word:
                 self.word = list(word)
-                self.winner = player.name
-                player.points += 1
             else:
                 self.misses.append(guess.lower())
-           
+    
+    def _update_game_word(self, guess, word):
+        """Helper function for check player guess."""
+        for idx, letter in enumerate(word):
+            if guess == letter:
+                self.word[idx] = guess
+
+    def check_for_winner(self):
+        """If winner, add point to correct player and set name to self.winner."""
+        # Check if all letters guessed correctly
+        if '_' not in self.word:
+            self.winner = self.player.name
+            self.player.points += 1
         # Check if guess limit has been reached     
         if len(self.misses) == 9:
-            self.winner = opponent.name
-            opponent.points += 1
-            self.word = list(word)
+            self.winner = self.opponent.name
+            self.opponent.points += 1
+            self.word = list(self.opponent.word)
 
     def display_board(self):
         """Display game progress to terminal: Board_image, word, misses and players points."""
@@ -67,9 +59,3 @@ class Game():
         print(f"Word: {' '.join(self.word)}\n")
         print(f"Misses: {', '.join(self.misses)}\n")
         print(f"Points: {player.name} = {player.points}, {opponent.name} = {opponent.points}\n")
-
-    def _update_game_word(self, guess, word):
-        """Helper function for check player guess."""
-        for idx, letter in enumerate(word):
-            if guess == letter:
-                self.word[idx] = guess
