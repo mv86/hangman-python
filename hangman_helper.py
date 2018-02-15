@@ -1,12 +1,13 @@
 """Helper functions for hangman script."""
-import re
 from random import randrange
 from player import Player
 
+# Add colour to error text
+ERROR = '\033[91m'
+END = '\033[0m'
 
-REGEX = re.compile('[^a-zA-Z]')
-with open('/usr/share/dict/words') as word_file:
-    DICTIONARY = {word.strip().lower() for word in word_file if not REGEX.search(word.strip())}
+with open('english_dictionary.txt') as english_dictionary:
+    DICTIONARY = set(word.strip() for word in english_dictionary)
 
 
 def choose_players():
@@ -35,7 +36,7 @@ def _choose_name(player):
     while not name:
         name = input(f'\n{player} please input your name\n--> ').strip().capitalize()
         if not name.isalnum():
-            print('\nError! Name needs to be alphanumeric!\n')
+            print(f'\n{ERROR}Error! Name needs to be alphanumeric!{END}\n')
             name = None
     return name
 
@@ -50,9 +51,23 @@ def choose_word(player):
         while not word:
             word = input(f'\nPlease choose a secret word {player.name}...\n--> ').strip().lower()
             if word not in DICTIONARY:
-                print('\nError! Word needs to be a dictionary word. No cheating!!!\n')
+                print(f'\n{ERROR}Error! Word needs to be a dictionary word. No cheating!!!{END}\n')
                 word = None
     return word
+
+
+def validate_player_guess(game):
+    """Prompt player for guess. Validate player guess. Return str."""
+    guess = None
+    while not guess:
+        guess = input(f'\nGuess a letter or the word {game.player.name}!\n--> ')
+        if len(guess) > 1 and len(guess) < len(game.opponent.word):
+            print(f'\n{ERROR}Error! Guess a single letter or the entire word!{END}\n')
+            guess = ''
+        if guess.upper() in game.word or guess in game.misses:
+            print(f'\n{ERROR}Error! Already tried that one, guess again!{END}\n')
+            guess = ''
+    return guess
 
 
 def play_again():
