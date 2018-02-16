@@ -1,5 +1,6 @@
 """Module with one class: Game."""
 from board_images import BOARD_IMAGES
+from game_colours import YELLOW, END
 
 
 class Game():
@@ -56,6 +57,6 @@ class Game():
         player = self.player
         opponent = self.opponent
         print(f"{BOARD_IMAGES[len(self.misses)]}")
-        print(f"Word: {' '.join(self.word)}\n")
-        print(f"Misses: {', '.join(self.misses)}\n")
-        print(f"Points: {player.name} = {player.points}, {opponent.name} = {opponent.points}\n")
+        print(f"{YELLOW}Word: {' '.join(self.word)}\n{END}")
+        print(f"{YELLOW}Misses: {', '.join(self.misses)}\n{END}")
+        print(f"{YELLOW}Points: {player.name} = {player.points}, {opponent.name} = {opponent.points}\n{END}")

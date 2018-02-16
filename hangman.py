@@ -2,14 +2,16 @@
 """Script to start Hangman game."""
 from game import Game
 from hangman_helper import choose_players, choose_word, validate_player_guess, play_again
+from game_colours import YELLOW, BLUE, END
 
+# TODO Add functionality to exit game early
 
 def hangman():
     """Entry point to game."""
-    print('\nWelcome to Hangman....')
+    print(f'\n{YELLOW}Welcome to Hangman....\n{END}')
     player1, player2 = choose_players()
     play_game(player1, player2)
-    print('\nThanks for playing! See you again soon!\n')
+    print(f'\n{YELLOW}Thanks for playing! See you again soon!\n{END}')
     
 
 def play_game(player1, player2):
@@ -26,7 +28,7 @@ def play_game(player1, player2):
         game.check_for_winner()
         game.display_board()
 
-    print(f'{game.winner} wins!!!')
+    print(f'{BLUE}{game.winner} wins!!!\n{END}')
 
     if play_again():
         if player2.name == 'Computer':
