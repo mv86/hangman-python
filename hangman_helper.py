@@ -59,7 +59,9 @@ def validate_player_guess(game):
     guess = None
     while not guess:
         guess = input(f'{YELLOW}Guess a letter or the word {game.player.name}!\n-->{END} ')
-        # TODO Add if word not [a-zA-Z]
+        if not guess.isalpha():
+            print(f'{RED}Must be alphabetical characters!{END}')
+            guess = ''
         if len(guess) > 1 and len(guess) < len(game.opponent.word):
             print(f'{RED}Guess a single letter or the entire word!{END}')
             guess = ''

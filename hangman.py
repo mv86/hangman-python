@@ -1,14 +1,14 @@
 #!/home/max/Python/projects/hangman/venv/bin/python
 """Script to start Hangman game."""
+import sys
 from game import Game
-from hangman_helper import choose_players, choose_word, validate_player_guess, play_again
 from game_colours import YELLOW, BLUE, END
+from hangman_helper import choose_players, choose_word, validate_player_guess, play_again
 
-# TODO Add functionality to exit game early
 
 def hangman():
     """Entry point to game."""
-    print(f'\n{YELLOW}Welcome to Hangman....\n{END}')
+    print(f'\n{YELLOW}Welcome to Hangman....\nPress Ctrl-C to exit at any time....\n{END}')
     player1, player2 = choose_players()
     play_game(player1, player2)
     print(f'\n{YELLOW}Thanks for playing! See you again soon!\n{END}')
@@ -40,4 +40,8 @@ def play_game(player1, player2):
 
 
 if __name__ == '__main__':
-    hangman()
+    try:
+        hangman()
+    except KeyboardInterrupt:
+        print(f'\n\n{YELLOW}Thanks for playing! See you again soon!\n{END}')
+        sys.exit(0)
