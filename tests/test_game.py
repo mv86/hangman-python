@@ -19,29 +19,48 @@ class TestGame(unittest.TestCase):
         self.assertEqual([], self.game.misses)
         self.assertEqual(None, self.game.winner)
 
-    def test_check_player_guess(self):
+    def test_validate_player_guess(self):
+        self.game.word = ['_', 'A', '_', '_']
+        self.game.misses = ['b']
+        valid_guess, msg = self.game.validate_player_guess('')
+        self.assertFalse(valid_guess)
+        self.assertEqual('\033[91mMust be alphabetical characters!\033[0m', msg)
+        valid_guess, msg = self.game.validate_player_guess(',')
+        self.assertFalse(valid_guess)
+        self.assertEqual('\033[91mMust be alphabetical characters!\033[0m', msg)
+        valid_guess, msg = self.game.validate_player_guess('abc')
+        self.assertFalse(valid_guess)
+        self.assertEqual('\033[91mGuess a single letter or the entire word!\033[0m', msg)
+        valid_guess, msg = self.game.validate_player_guess('b')
+        self.assertFalse(valid_guess)
+        self.assertEqual('\033[91mAlready tried that one, guess again!\033[0m', msg)
+        valid_guess, msg = self.game.validate_player_guess('c')
+        self.assertTrue(valid_guess)
+        self.assertFalse(msg)
+
+    def test_update_game(self):
         self.player1.new_guess('a')
-        self.game.check_player_guess()
+        self.game.update_game()
         self.assertEqual('A', self.game.player.guess)
         self.assertEqual(1, self.game.player.guesses)
         self.assertEqual(['_', 'A', '_', '_', '_', 'A', '_'], self.game.word)
 
         self.player1.new_guess('b')
-        self.game.check_player_guess()
+        self.game.update_game()
         self.assertEqual(2, self.game.player.guesses)
         self.assertEqual(['b'], self.game.misses)
         self.assertEqual(['_', 'A', '_', '_', '_', 'A', '_'], self.game.word)
 
         self.player1.new_guess('dangdan')
         self.assertEqual('DANGDAN', self.game.player.guess)
-        self.game.check_player_guess()
+        self.game.update_game()
         self.assertEqual(3, self.game.player.guesses)
         self.assertEqual(['b', 'dangdan'], self.game.misses)
         self.assertEqual(['_', 'A', '_', '_', '_', 'A', '_'], self.game.word)
         
     def test_player_wins(self):
         self.player1.new_guess('hangman')
-        self.game.check_player_guess()
+        self.game.update_game()
         self.game.check_for_winner()
         self.assertEqual(['H', 'A', 'N', 'G', 'M', 'A', 'N'], self.game.word)     
         self.assertEqual('Max', self.game.winner)
@@ -50,7 +69,7 @@ class TestGame(unittest.TestCase):
     def test_opponant_wins(self):
         self.game.misses = ['b', 'c', 'd', 'e', 'f', 'i', 'k', 'l']
         self.player1.new_guess('o')
-        self.game.check_player_guess()
+        self.game.update_game()
         self.game.check_for_winner()
         self.assertEqual(['H', 'A', 'N', 'G', 'M', 'A', 'N'], self.game.word)
         self.assertEqual('Mary', self.game.winner)

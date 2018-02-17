@@ -4,7 +4,7 @@ import sys
 from game import Game
 from game_colours import YELLOW, BLUE, END
 from hangman_helper import choose_players, choose_word, clear_screen, \
-                           validate_player_guess, play_again
+                           prompt_for_guess, play_again
 
 
 def hangman():
@@ -25,9 +25,9 @@ def play_game(player1, player2):
     game.display_board()
 
     while not game.winner:
-        guess = validate_player_guess(game)
+        guess = prompt_for_guess(game)
         game.player.new_guess(guess)
-        game.check_player_guess()
+        game.update_game()
         game.check_for_winner()
         clear_screen()
         game.display_board()
