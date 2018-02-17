@@ -58,7 +58,7 @@ def validate_player_guess(game):
     """Prompt player for guess. Validate player guess. Return str."""
     guess = None
     while not guess:
-        guess = input(f'{YELLOW}Guess a letter or the word {game.player.name}!\n-->{END} ')
+        guess = input(f'{YELLOW}Guess a letter or the word {game.player.name}!\n-->{END} ').strip()
         if not guess.isalpha():
             print(f'{RED}Must be alphabetical characters!{END}')
             guess = ''
@@ -69,6 +69,11 @@ def validate_player_guess(game):
             print(f'{RED}Already tried that one, guess again!{END}')
             guess = ''
     return guess
+
+
+def clear_screen():
+    """Print 20 newlines to screen."""
+    print('\n' * 20)
 
 
 def play_again():
