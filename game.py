@@ -1,7 +1,5 @@
 """Module with one class: Game."""
-from board_images import BOARD_IMAGES
-from hangman_helper import MSG
-from game_colours import YELLOW, END
+from display import display_board, MSG
 
 
 class Game():
@@ -66,11 +64,6 @@ class Game():
             self.opponent.points += 1
             self.word = list(self.opponent.word)
 
-    def display_board(self):
+    def display_game_state(self):
         """Display game progress to terminal: Board_image, word, misses and players points."""
-        player = self.player
-        opponent = self.opponent
-        print(f"{BOARD_IMAGES[len(self.misses)]}")
-        print(f"{YELLOW}Word: {' '.join(self.word)}\n{END}")
-        print(f"{YELLOW}Misses: {', '.join(self.misses)}\n{END}")
-        print(f"{YELLOW}Points: {player.name} = {player.points}, {opponent.name} = {opponent.points}\n{END}")
+        display_board(self.player, self.opponent, self.word, self.misses)

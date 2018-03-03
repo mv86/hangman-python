@@ -1,7 +1,7 @@
 """Helper functions for hangman script."""
 from random import randrange
 from player import Player
-from game_colours import YELLOW, RED, END
+from display import MSG, YELLOW, RED, END
 
 
 with open('english_dictionary.txt') as english_dictionary:
@@ -83,7 +83,7 @@ def play_again():
     choice = None
     while choice not in ('Y', 'YES', 'N', 'NO'):
         choice = input(MSG['choice']).upper().strip()
-        
+
     return CHOICE_DICT[choice]
 
 
@@ -92,17 +92,4 @@ CHOICE_DICT = {
     'YES': True,
     'N': False,
     'NO': False
-}
-
-
-MSG = {
-    'welcome': f'\n{YELLOW}Welcome to Hangman....\nPress Ctrl-C to exit at any time....\n{END}',
-    'goodbye': f'\n{YELLOW}Thanks for playing! See you again soon!\n{END}',
-    'players': f'{YELLOW}Num of players 1/2?\n-->{END} ',
-    'choice': f'{YELLOW}Play Again? (Y)es/(N)o?\n-->{END} ',
-    'err_alnum': f'{RED}Name needs to be alphanumeric!{END}',
-    'err_dict_word': f'{RED}Word needs to be a dictionary word. No cheating!!!{END}',
-    'err_alpha': f'{RED}Must be alphabetical characters!{END}',
-    'err_guess_len': f'{RED}Guess a single letter or the entire word!{END}',
-    'err_prev_guess': f'{RED}Already tried that one, guess again!{END}'
 }

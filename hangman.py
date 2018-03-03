@@ -2,13 +2,14 @@
 """Script to start Hangman game."""
 import sys
 from game import Game
-from game_colours import BLUE, END
+from display import BLUE, END, MSG
 from hangman_helper import choose_players, choose_word, clear_screen, \
-                           prompt_for_guess, play_again, MSG
+                           prompt_for_guess, play_again
 
 
 def hangman():
     """Entry point to game."""
+    clear_screen()
     print(MSG['welcome'])
     player1, player2 = choose_players()
     play_game(player1, player2)
@@ -22,7 +23,7 @@ def play_game(player1, player2):
     player2.add_word_choice(word)
     clear_screen()
     game = Game(player1, player2)
-    game.display_board()
+    game.display_game_state()
 
     while not game.winner:
         guess = prompt_for_guess(game)
@@ -30,7 +31,7 @@ def play_game(player1, player2):
         game.update_game()
         game.check_for_winner()
         clear_screen()
-        game.display_board()
+        game.display_game_state()
 
     print(f'{BLUE}{game.winner} wins!!!\n{END}')
 
