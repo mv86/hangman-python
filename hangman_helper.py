@@ -15,8 +15,7 @@ def choose_players():
     """
     no_of_players = None
     while no_of_players not in ('1', '2'):
-        msg = f'{YELLOW}Num of players 1/2?\n-->{END} '
-        no_of_players = input(msg).strip()
+        no_of_players = input(MSG['players']).strip()
 
     player_name = _choose_name('Player 1')
     player1 = Player(player_name)
@@ -31,41 +30,46 @@ def choose_players():
 
 def _choose_name(player):
     """Helper function for choose_players."""
+    msg = f'{YELLOW}{player} please input your name\n-->{END} '
+
     name = None
     while not name:
-        msg = f'{YELLOW}{player} please input your name\n-->{END} '
         name = input(msg).strip().capitalize()
         if not name.isalnum():
-            print(f'{RED}Name needs to be alphanumeric!{END}')
+            print(MSG['err_alnum'])
             name = None
+
     return name
 
 
 def choose_word(player):
     """Prompt player2 for word choice. Return str"""
+    msg = f'{YELLOW}Please choose a secret word {player.name}...\n-->{END} '
+
     if player.name == 'Computer':
         rand_idx = randrange(len(DICTIONARY))
         word = list(DICTIONARY)[rand_idx]
     else:
         word = None
         while not word:
-            msg = f'{YELLOW}Please choose a secret word {player.name}...\n-->{END} '
             word = input(msg).strip().lower()
             if word not in DICTIONARY:
-                print(f'{RED}Word needs to be a dictionary word. No cheating!!!{END}')
+                print(MSG['err_dict_word'])
                 word = None
+
     return word
 
 
 def prompt_for_guess(game):
     """Prompt player for guess. Validate player guess. Return str."""
+    msg = f'{YELLOW}Guess a letter or the word {game.player.name}!\n-->{END} '
+
     valid_guess = None
     while not valid_guess:
-        msg = f'{YELLOW}Guess a letter or the word {game.player.name}!\n-->{END} '
         guess = input(msg).strip()
         valid_guess, err_msg = game.validate_player_guess(guess)
-        if err_msg: 
-            print(err_msg)
+        if err_msg: print(err_msg)
+
     return guess
 
 
@@ -78,8 +82,8 @@ def play_again():
     """Prompt user input to play again. Return boolean."""
     choice = None
     while choice not in ('Y', 'YES', 'N', 'NO'):
-        msg = f'{YELLOW}Play Again? (Y)es/(N)o?\n-->{END} '
-        choice = input(msg).upper().strip()
+        choice = input(MSG['choice']).upper().strip()
+        
     return CHOICE_DICT[choice]
 
 
@@ -88,4 +92,17 @@ CHOICE_DICT = {
     'YES': True,
     'N': False,
     'NO': False
+}
+
+
+MSG = {
+    'welcome': f'\n{YELLOW}Welcome to Hangman....\nPress Ctrl-C to exit at any time....\n{END}',
+    'goodbye': f'\n{YELLOW}Thanks for playing! See you again soon!\n{END}',
+    'players': f'{YELLOW}Num of players 1/2?\n-->{END} ',
+    'choice': f'{YELLOW}Play Again? (Y)es/(N)o?\n-->{END} ',
+    'err_alnum': f'{RED}Name needs to be alphanumeric!{END}',
+    'err_dict_word': f'{RED}Word needs to be a dictionary word. No cheating!!!{END}',
+    'err_alpha': f'{RED}Must be alphabetical characters!{END}',
+    'err_guess_len': f'{RED}Guess a single letter or the entire word!{END}',
+    'err_prev_guess': f'{RED}Already tried that one, guess again!{END}'
 }

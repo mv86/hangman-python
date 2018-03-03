@@ -1,6 +1,7 @@
 """Module with one class: Game."""
 from board_images import BOARD_IMAGES
-from game_colours import RED, YELLOW, END
+from hangman_helper import MSG
+from game_colours import YELLOW, END
 
 
 class Game():
@@ -21,17 +22,14 @@ class Game():
     def validate_player_guess(self, guess):
         """Validate guess is a single letter or word guess and hasn't been guessed before. 
 
-           Return True, None or False, str(err_msg).
+           Return True, None   or   False, str(err_msg).
         """
         if not guess.isalpha():
-            msg = f'{RED}Must be alphabetical characters!{END}'
-            return False, msg
-        if len(guess) > 1 and len(guess) < len(self.word):
-            msg = f'{RED}Guess a single letter or the entire word!{END}'
-            return False, msg
+            return False, MSG['err_alpha']
+        if 1 < len(guess) < len(self.word):
+            return False, MSG['err_guess_len']
         if guess.upper() in self.word or guess.lower() in self.misses:
-            msg = f'{RED}Already tried that one, guess again!{END}'
-            return False, msg
+            return False, MSG['err_prev_guess']
         return True, None
 
     def update_game(self):

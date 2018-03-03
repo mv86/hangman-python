@@ -2,22 +2,22 @@
 """Script to start Hangman game."""
 import sys
 from game import Game
-from game_colours import YELLOW, BLUE, END
+from game_colours import BLUE, END
 from hangman_helper import choose_players, choose_word, clear_screen, \
-                           prompt_for_guess, play_again
+                           prompt_for_guess, play_again, MSG
 
 
 def hangman():
     """Entry point to game."""
-    print(f'\n{YELLOW}Welcome to Hangman....\nPress Ctrl-C to exit at any time....\n{END}')
+    print(MSG['welcome'])
     player1, player2 = choose_players()
-    clear_screen()
     play_game(player1, player2)
-    print(f'\n{YELLOW}Thanks for playing! See you again soon!\n{END}')
+    print(MSG['goodbye'])
     
 
 def play_game(player1, player2):
     """Hangman game loop."""
+    clear_screen()
     word = choose_word(player2)
     player2.add_word_choice(word)
     clear_screen()
@@ -46,9 +46,7 @@ def play_game(player1, player2):
 if __name__ == '__main__':
     try:
         hangman()
-    except KeyboardInterrupt:
-        print(f'\n\n{YELLOW}Thanks for playing! See you again soon!\n{END}')
-        sys.exit(0)
-    except EOFError:
-        print(f'\n\n{YELLOW}Thanks for playing! See you again soon!\n{END}')
+    except (KeyboardInterrupt, EOFError):
+        print('\n')
+        print(MSG['goodbye'])
         sys.exit(0)
