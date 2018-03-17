@@ -25,6 +25,7 @@ class Game():
         self.word = list('_' * len(self.opponent.word))
         self.misses = []
         self.winner = None
+        self.display_game_state()
 
     def __repr__(self):
         return f'{self.__class__.__name__!r}({self.player!r}, {self.opponent!r})'
@@ -39,7 +40,7 @@ class Game():
         """
         if not guess.isalpha():
             return False, MSG['err_alpha']
-        if 1 < len(guess) < len(self.word):
+        if 1 < len(guess) < len(self.word) or len(guess) > len(self.word):
             return False, MSG['err_guess_len']
         if guess.upper() in self.word or guess.lower() in self.misses:
             return False, MSG['err_prev_guess']

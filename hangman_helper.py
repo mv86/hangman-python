@@ -8,6 +8,13 @@ with open('english_dictionary.txt') as english_dictionary:
     DICTIONARY = set(word.strip() for word in english_dictionary)
 
 
+def start_game():
+    """Display welcome message and start game."""
+    clear_screen()
+    print(MSG['welcome'])
+    print('\n' * 3)
+
+
 def choose_players():
     """Prompt user input for num of players (1/2) and player names. Return 2 Player objects.
 
@@ -15,12 +22,15 @@ def choose_players():
     """
     no_of_players = None
     while no_of_players not in ('1', '2'):
+        clear_screen()
         no_of_players = input(MSG['players']).strip()
 
+    clear_screen()
     player_name = _choose_name('Player 1')
     player1 = Player(player_name)
 
     if no_of_players == '2':
+        clear_screen()
         player_name = _choose_name('Player 2')
         player2 = Player(player_name)
         return player1, player2
@@ -37,15 +47,6 @@ def _choose_name(player):
             print(MSG['err_alnum'])
             name = None
     return name.title()
-
-
-def play(game):
-    """Perform all actions for one turn of game."""
-    game.player.guess = prompt_for_guess(game)
-    game.update_game()
-    game.check_for_winner()
-    clear_screen()
-    game.display_game_state()
 
 
 def choose_word(player2):
@@ -65,6 +66,15 @@ def choose_word(player2):
     player2.word = word.upper()
 
 
+def play(game):
+    """Perform all actions for one turn of game."""
+    game.player.guess = prompt_for_guess(game)
+    game.update_game()
+    game.check_for_winner()
+    clear_screen()
+    game.display_game_state()
+
+
 def prompt_for_guess(game):
     """Prompt player for guess. Validate player guess. Return str."""
     valid_guess = None
@@ -73,11 +83,6 @@ def prompt_for_guess(game):
         valid_guess, err_msg = game.validate_player_guess(guess)
         if err_msg: print(err_msg)
     return guess.upper()
-
-
-def clear_screen():
-    """Print 30 new lines to screen."""
-    print('\n' * 30)
 
 
 def play_again():
@@ -94,3 +99,14 @@ CHOICE_DICT = {
     'N': False,
     'NO': False
 }
+
+
+def end_game():
+    """Display goodbye message and exit game."""
+    clear_screen()
+    print(MSG['goodbye'])
+
+
+def clear_screen():
+    """Print 50 new lines to screen."""
+    print('\n' * 50)

@@ -1,4 +1,4 @@
-"""Collection of constants and function to display game progress to terminal."""
+"""Collection of display constants and function to display game progress to terminal."""
 
 
 def display_board(player, opponent, word, misses):
@@ -135,6 +135,6 @@ MSG = {
     'err_alnum': f'{RED}Name needs to be alphanumeric with no spaces!{END}',
     'err_dict_word': f'{RED}Word needs to be a dictionary word. No cheating!!!{END}',
     'err_alpha': f'{RED}Must be alphabetical characters!{END}',
-    'err_guess_len': f'{RED}Guess a single letter or the entire word!{END}',
+    'err_guess_len': f'{RED}Wrong guess length!{END}',
     'err_prev_guess': f'{RED}Already tried that one, guess again!{END}'
 }
