@@ -1,6 +1,6 @@
 """Helper functions for hangman script."""
 from random import randrange
-from player import Player
+from game_objects import Player
 from display import MSG
 
 
@@ -36,22 +36,33 @@ def _choose_name(player):
         if not name.isalnum():
             print(MSG['err_alnum'])
             name = None
-    return name
+    return name.title()
 
 
-def choose_word(player):
+def play(game):
+    """Perform all actions for one turn of game."""
+    game.player.guess = prompt_for_guess(game)
+    game.update_game()
+    game.check_for_winner()
+    clear_screen()
+    game.display_game_state()
+
+
+def choose_word(player2):
     """Prompt player2 for word choice. Return str"""
-    if player.name == 'Computer':
+    if player2.name == 'Computer':
         rand_idx = randrange(len(DICTIONARY))
         word = list(DICTIONARY)[rand_idx]
     else:
+        clear_screen()
         word = None
         while not word:
-            word = input(MSG['word_choice'] % player.name).strip().lower()
+            word = input(MSG['word_choice'] % player2.name).strip().lower()
             if word not in DICTIONARY:
                 print(MSG['err_dict_word'])
                 word = None
-    return word
+    clear_screen()
+    player2.word = word.upper()
 
 
 def prompt_for_guess(game):
@@ -61,7 +72,7 @@ def prompt_for_guess(game):
         guess = input(MSG['guess'] % game.player.name).strip()
         valid_guess, err_msg = game.validate_player_guess(guess)
         if err_msg: print(err_msg)
-    return guess
+    return guess.upper()
 
 
 def clear_screen():

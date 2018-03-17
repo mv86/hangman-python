@@ -132,7 +132,7 @@ MSG = {
     'guess': f'{YELLOW}Guess a letter or the word %s!\n-->{END} ',
     'play_again': f'{YELLOW}Play Again? (Y)es/(N)o?\n-->{END} ',
     'winner': f'{BLUE}   %s wins!!!\n{END}',
-    'err_alnum': f'{RED}Name needs to be alphanumeric!{END}',
+    'err_alnum': f'{RED}Name needs to be alphanumeric with no spaces!{END}',
     'err_dict_word': f'{RED}Word needs to be a dictionary word. No cheating!!!{END}',
     'err_alpha': f'{RED}Must be alphabetical characters!{END}',
     'err_guess_len': f'{RED}Guess a single letter or the entire word!{END}',

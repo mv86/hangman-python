@@ -1,5 +1,20 @@
-"""Module with one class: Game."""
+"""TODO"""
 from display import display_board, MSG
+
+
+class Player():
+    """Player class"""
+    def __init__(self, name):
+        self.name = name
+        self.points = 0
+        self.word = ''
+        self.guess = ''
+
+    def __repr__(self):
+        return f'{self.__class__.__name__!r}({self.name!r})'
+
+    def __str__(self):
+        return f'Player: Name = {self.name}'
 
 
 class Game():
