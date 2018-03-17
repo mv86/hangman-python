@@ -122,12 +122,16 @@ BOARD_IMAGES = {
 }
 
 
-# Dict of screen msg output not requiring dynamic variables
+# Dict of screen msg output
 MSG = {
     'welcome': f'\n{YELLOW}Welcome to Hangman....\nPress Ctrl-C to exit at any time....\n{END}',
     'goodbye': f'\n{YELLOW}Thanks for playing! See you again soon!\n{END}',
     'players': f'{YELLOW}Num of players 1/2?\n-->{END} ',
-    'choice': f'{YELLOW}Play Again? (Y)es/(N)o?\n-->{END} ',
+    'name_choice': f'{YELLOW}%s please input your name\n-->{END} ',
+    'word_choice': f'{YELLOW}Please choose a secret word %s...\n-->{END} ',
+    'guess': f'{YELLOW}Guess a letter or the word %s!\n-->{END} ',
+    'play_again': f'{YELLOW}Play Again? (Y)es/(N)o?\n-->{END} ',
+    'winner': f'{BLUE}   %s wins!!!\n{END}',
     'err_alnum': f'{RED}Name needs to be alphanumeric!{END}',
     'err_dict_word': f'{RED}Word needs to be a dictionary word. No cheating!!!{END}',
     'err_alpha': f'{RED}Must be alphabetical characters!{END}',

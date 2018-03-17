@@ -2,7 +2,7 @@
 """Script to start Hangman game."""
 import sys
 from game import Game
-from display import BLUE, END, MSG
+from display import MSG
 from hangman_helper import choose_players, choose_word, clear_screen, \
                            prompt_for_guess, play_again
 
@@ -33,7 +33,7 @@ def play_game(player1, player2):
         clear_screen()
         game.display_game_state()
 
-    print(f'{BLUE}{game.winner} wins!!!\n{END}')
+    print(MSG['winner'] % game.winner)
 
     if play_again():
         if player2.name == 'Computer':

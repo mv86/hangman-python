@@ -1,7 +1,7 @@
 """Helper functions for hangman script."""
 from random import randrange
 from player import Player
-from display import MSG, YELLOW, RED, END
+from display import MSG
 
 
 with open('english_dictionary.txt') as english_dictionary:
@@ -30,46 +30,37 @@ def choose_players():
 
 def _choose_name(player):
     """Helper function for choose_players."""
-    msg = f'{YELLOW}{player} please input your name\n-->{END} '
-
     name = None
     while not name:
-        name = input(msg).strip().capitalize()
+        name = input(MSG['name_choice'] % player).strip().capitalize()
         if not name.isalnum():
             print(MSG['err_alnum'])
             name = None
-
     return name
 
 
 def choose_word(player):
     """Prompt player2 for word choice. Return str"""
-    msg = f'{YELLOW}Please choose a secret word {player.name}...\n-->{END} '
-
     if player.name == 'Computer':
         rand_idx = randrange(len(DICTIONARY))
         word = list(DICTIONARY)[rand_idx]
     else:
         word = None
         while not word:
-            word = input(msg).strip().lower()
+            word = input(MSG['word_choice'] % player.name).strip().lower()
             if word not in DICTIONARY:
                 print(MSG['err_dict_word'])
                 word = None
-
     return word
 
 
 def prompt_for_guess(game):
     """Prompt player for guess. Validate player guess. Return str."""
-    msg = f'{YELLOW}Guess a letter or the word {game.player.name}!\n-->{END} '
-
     valid_guess = None
     while not valid_guess:
-        guess = input(msg).strip()
+        guess = input(MSG['guess'] % game.player.name).strip()
         valid_guess, err_msg = game.validate_player_guess(guess)
         if err_msg: print(err_msg)
-
     return guess
 
 
@@ -82,8 +73,7 @@ def play_again():
     """Prompt user input to play again. Return boolean."""
     choice = None
     while choice not in ('Y', 'YES', 'N', 'NO'):
-        choice = input(MSG['choice']).upper().strip()
-
+        choice = input(MSG['play_again']).upper().strip()
     return CHOICE_DICT[choice]
 
 
