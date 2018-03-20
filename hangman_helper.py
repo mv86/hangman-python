@@ -67,7 +67,7 @@ def choose_word(player2):
 
 
 def play(game):
-    """Perform all actions for one turn of game."""
+    """Perform all actions for one turn of game. Repeat until winner found."""
     game.player.guess = prompt_for_guess(game)
     game.update_game()
     game.check_for_winner()
@@ -110,3 +110,4 @@ def end_game():
 def clear_screen():
     """Print 50 new lines to screen."""
     print('\n' * 50)
+

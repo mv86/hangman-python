@@ -11,12 +11,12 @@ def hangman():
     start_game()
     player1, player2 = choose_players()
     new_game(player1, player2)
-    
 
-def new_game(player1, player2):
+
+def new_game(player, opponent):
     """Hangman game loop."""
-    choose_word(player2)
-    game = Game(player1, player2)
+    choose_word(opponent)
+    game = Game(player, opponent)
 
     while not game.winner:
         play(game)
@@ -24,10 +24,10 @@ def new_game(player1, player2):
     print(MSG['winner'] % game.winner)
 
     if play_again():
-        if player2.name == 'Computer':  # Computer always player 2
-            new_game(player1, player2)
+        if opponent.name == 'Computer':  # Computer always opponent
+            new_game(player, opponent)
         else:  # Switch game roles
-            new_game(game.opponent, game.player)
+            new_game(opponent, player)
 
     end_game()
 
